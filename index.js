@@ -1,8 +1,10 @@
 const express= require("express");
 const bodyParser =require('body-parser')
-const {listBanksController, updateBankController, createBankController, deleteBanksController} = require('./controllers');
+const mongoose =require('mongoose')
 const server = express();
- 
+const bankRoutes = require('./routes/bankroute')
+const accountRoutes = require('./routes/accountRoute')
+
 //middleware
 server.use(bodyParser.json());
 
@@ -12,14 +14,13 @@ server.use(bodyParser.json());
 
 
 //routes
+server.use(accountRoutes)
+server.use(bankRoutes)
 
-//create bank -get method
-server.get ('/bank', listBanksController);
-//create bank - post method
-server.post('/bank', createBankController);
-//update bank - put method
-server.put('/bank', updateBankController);
-//delete bank - delete method
-server.delete('/bank', deleteBanksController);
-  
+//connecting to database and  start  server
+mongoose.connect('mongodb+srv://codetrainUser:mongo100@cluster0.ebfyc.mongodb.net/codetrain?retryWrites=true&w=majority',
+{useNewUrlParser:true, useUnifiedTopology:true}
+)
+.then(result =>{
 server.listen(3000, ()=>console.log('server is ready'))
+}).catch(err =>console.log(err))
