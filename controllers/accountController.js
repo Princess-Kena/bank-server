@@ -8,7 +8,7 @@ const createAccountController= (req, res) =>{
         if(result)
         res.json({message:"Account created", data:result});
         else
-        res.json({message:"Fail ed to create account"}); 
+        res.json({message:"Failed to create account"}); 
     })
 }
 const listAccountController =(req, res) =>{
